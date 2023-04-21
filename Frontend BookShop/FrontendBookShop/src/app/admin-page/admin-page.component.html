@@ -1,0 +1,73 @@
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+  <div class="container px-5">
+    <a class="navbar-brand" href="firstPage">BookShop</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="viewProfilePage">View Profile</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div style="margin-top: 10%; color: deeppink; background-color: lightcoral" class="container">
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Author</th>
+        <th>Stock</th>
+        <th>Price</th>
+        <th>Genre</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let book of bookList">
+        <td><span>{{book.id}}</span></td>
+        <td><span>{{book.name}}</span></td>
+        <td><span>{{book.author}}</span></td>
+        <td><span>{{book.stock}}</span></td>
+        <td><span>{{book.price}}</span></td>
+        <td><span>{{book.type}}</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div>
+  <div style="margin-left: 30%; margin-right: 30%" class="card-header">
+    <form (ngSubmit)="insertABook(); updatePrice(); updateStock(); deleteABook()">
+      <div class="mb-sm-3">
+        <label for="id" class="form-label">Id</label>
+        <input type="id" [(ngModel)]="book.id" class="form-control" id="id" name="id">
+      </div>
+      <div class="mb-sm-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="name" [(ngModel)]="book.name" class="form-control" id="name" name="name">
+      </div>
+      <div class="mb-sm-3">
+        <label for="author" class="form-label">Author</label>
+        <input type="author" [(ngModel)]="book.author" class="form-control" id="author" name="author">
+      </div>
+      <div class="mb-sm-3">
+        <label for="stock" class="form-label">Stock</label>
+        <input type="stock" [(ngModel)]="book.stock" class="form-control" id="stock" name="stock">
+      </div>
+      <div class="mb-sm-3">
+        <label for="price" class="form-label">Price</label>
+        <input type="price" [(ngModel)]="book.price" class="form-control" id="price" name="price">
+      </div>
+      <div class="mb-sm-3">
+        <label for="type" class="form-label">Genre</label>
+        <input type="type" [(ngModel)]="book.type" class="form-control" id="type" name="type">
+      </div>
+      <button type="button" class="btn btn-primary" (click)="insertABook()">Insert A Book</button>
+      <button type="button" class="btn btn-primary" (click)="updatePrice()">Update Price</button>
+      <button type="button" class="btn btn-primary" (click)="updateStock()">Update Stock</button>
+      <button type="button" class="btn btn-primary" (click)="deleteABook()">Delete A Book</button>
+    </form>
+  </div>
+</div>
+

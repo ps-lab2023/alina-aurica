@@ -1,0 +1,39 @@
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+  <div class="container px-5">
+    <a class="navbar-brand" href="firstPage">BookShop</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto">
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- de implementat -->
+<!-- schimbat in output-->
+<div>
+  <div style="margin-top:10%; margin-left: 30%; margin-right: 30%" class="card-header">
+    <h1 style="color: deeppink">Profile</h1>
+    <form>
+      <div class="mb-sm-3">
+        <label for="firstName" class="form-label">First Name</label>
+        <input type="firstName" value="{{user.firstName}}" class="form-control" id="firstName" name="firstName">
+      </div>
+      <div class="mb-sm-3">
+        <label for="lastName" class="form-label">Last Name</label>
+        <input type="lastName" value="{{user.lastName}}"  class="form-control" id="lastName" name="lastName">
+      </div>
+      <div class="mb-sm-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" value="{{user.email}}"  class="form-control" id="email" name="email">
+      </div>
+      <div class="mb-sm-3">
+        <label for="text" class="form-label">Password</label>
+        <input type="text" value="{{user.password}}" [(ngModel)]="user.password" class="form-control" id="text" name="text">
+      </div>
+      <!-- <button type="button" class="btn btn-primary" (click)="searchByName()">Search by name</button>-->
+    </form>
+    <button type="button" class="btn btn-primary" (click)="logOut()">LogOut</button>
+  </div>
+</div>

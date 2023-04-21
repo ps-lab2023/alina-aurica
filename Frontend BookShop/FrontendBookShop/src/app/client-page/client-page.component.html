@@ -1,0 +1,80 @@
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+  <div class="container px-5">
+    <a class="navbar-brand" href="firstPage">BookShop</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="viewProfilePage">View Profile</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div style="margin-top: 10%; color: deeppink; background-color: lightcoral" class="container">
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Author</th>
+      <th>Price</th>
+      <th>Genre</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let book of bookList">
+      <td><span>{{book.name}}</span></td>
+      <td><span>{{book.author}}</span></td>
+      <td><span>{{book.price}}</span></td>
+      <td><span>{{book.type}}</span></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div>
+  <div style="margin-left: 30%; margin-right: 30%" class="card-header">
+    <form (ngSubmit)="searchByName(); searchByAuthor(); searchByType(); addInCart(); deleteFromCart()">
+      <div class="mb-sm-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="name" [(ngModel)]="book.name" class="form-control" id="name" name="name">
+      </div>
+      <div class="mb-sm-3">
+        <label for="author" class="form-label">Author</label>
+        <input type="author" [(ngModel)]="book.author" class="form-control" id="author" name="author">
+      </div>
+      <div class="mb-sm-3">
+        <label for="type" class="form-label">Genre</label>
+        <input type="type" [(ngModel)]="book.type" class="form-control" id="type" name="type">
+      </div>
+      <button type="button" class="btn btn-primary" (click)="searchByName()">Search by name</button>
+      <button type="button" class="btn btn-primary" (click)="searchByAuthor()">Search by author</button>
+      <button type="button" class="btn btn-primary" (click)="searchByType()">Search by type</button>
+      <button type="button" class="btn btn-primary" (click)="addInCart()">Add In Cart</button>
+      <button type="button" class="btn btn-primary" (click)="deleteFromCart()">Delete From Cart</button>
+    </form>
+    <button type="button" class="btn btn-primary" (click)="generateBill()">Pay</button>
+  </div>
+</div>
+
+<p style="margin-left: 10%; color: deeppink; font-size: 30px">CART</p>
+<div style="color: deeppink; background-color: lightcoral" class="container">
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Author</th>
+      <th>Price</th>
+      <th>Genre</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let cart of cartList">
+      <td><span>{{cart.name}}</span></td>
+      <td><span>{{cart.author}}</span></td>
+      <td><span>{{cart.price}}</span></td>
+      <td><span>{{cart.type}}</span></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

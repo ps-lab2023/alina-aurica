@@ -12,28 +12,31 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @Builder
-@Getter
+@Data
 public class Client { //cred ca pot scapa de lista de carti de aici
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
-    @Setter
     private Long idClient;
 
-    @Setter
     private String firstName;
-    @Setter
     private String lastName;
-    @Setter
     private String email;
-    @Setter
     private String password;
 
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "id")
+    @ManyToMany
+    @JoinTable(
+            name = "client_book",
+            joinColumns = @JoinColumn(name = "client_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+    @ToString.Exclude
     private List<Book> books1;
 
-    @Setter
-    @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    private Bill bill;
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "id")
+    private List<Bill> bills;
+
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "idGiftCard")
+    private List<GiftCard> giftCards;
 
     /*
     @OneToOne(cascade = CascadeType.ALL)

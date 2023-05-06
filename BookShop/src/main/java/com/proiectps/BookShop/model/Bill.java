@@ -20,7 +20,7 @@ public class Bill {
     @GeneratedValue(strategy =  GenerationType.AUTO)
     private Long id;
     private LocalDateTime localDateTime;
-    @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Client client;
 
     public Bill(){

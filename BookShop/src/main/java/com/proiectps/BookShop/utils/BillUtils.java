@@ -18,7 +18,7 @@ public class BillUtils {
 
     public static String generateBill(Client client, BookService bookService){
         StringBuilder str = new StringBuilder();
-        List<Book> books = bookService.findByClient(client);
+        List<Book> books = bookService.findByClient(client); //imi preia cartile clientului
         for(Book b: books){
             str.append(b.getId()).append(" ").append(b.getName()).append(" ").append(b.getAuthor()).append(" ").append(b.getPrice()).append(" ");
         }

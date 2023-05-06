@@ -1,0 +1,30 @@
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+  <div class="container px-5">
+    <a class="navbar-brand" href="firstPage">BookShop</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="viewProfilePage">View Profile</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div>
+  <div style="margin-left: 30%; margin-right: 30%; margin-top: 10%" class="card-header">
+    <h1 style="color: deeppink">Gift Card</h1>
+    <form (ngSubmit)="generateGiftCard()">
+      <div class="mb-sm-3">
+        <label for="personName" class="form-label">PersonName</label>
+        <input type="personName" [(ngModel)]="giftCard.personName" class="form-control" id="personName" name="personName">
+      </div>
+      <div class="mb-sm-3">
+        <label for="money" class="form-label">Money</label>
+        <input type="money" [(ngModel)]="giftCard.money" class="form-control" id="money" name="money">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Gift Card</button>
+    </form>
+  </div>
+</div>

@@ -24,5 +24,7 @@ public interface BookService { //nu e finalizata
     List<Book> findAll();
 
     List<Book> findByClient(Client client);
+
+    List<Book> sortBooks();
 }
 

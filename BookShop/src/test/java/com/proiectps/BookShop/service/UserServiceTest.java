@@ -30,10 +30,10 @@ public class UserServiceTest { //trebuie sa mai fac pt insert (cred ca e registe
         private static final String PASSWORD = "aksjms";
         private static final String PASSWORD_NOT = "ana";
 
-        private static final User USER1 = new User(1L, "Mihai", "Pop", "mihai.pop@gmail.com", "aksjms", Role.CLIENT);
-        private static final User USER2 = new User(4L, "Mihai", "Popescu", "mihai.popescu@gmail.com", "aksjms", Role.CLIENT);
+        private static final User USER1 = new User(1L, "Mihai", "Pop", "mihai.pop@gmail.com", "aksjms", Role.CLIENT, false);
+        private static final User USER2 = new User(4L, "Mihai", "Popescu", "mihai.popescu@gmail.com", "aksjms", Role.CLIENT, false);
 
-        private static final User USER_NOT = new User(1L, "Mihai", "Anton", "mihai.anton@gmail.com", "alaska", Role.CLIENT);
+        private static final User USER_NOT = new User(1L, "Mihai", "Anton", "mihai.anton@gmail.com", "alaska", Role.CLIENT, false);
 
         private UserServiceImpl userServiceImpl;
 

@@ -34,8 +34,8 @@ public class BookShopApplication {
 //			Admin admin = new Admin();
 //
 			//Partea de register si logIn
-			User user = new User(1L, "Mihai", "Pop", "mihai.pop@gmail.com", "asdfg", Role.CLIENT);
-			User user2 = new User(2L, "Ion", "Marin", "ion.marin@bookshop.com", "admin", Role.ADMIN);
+			User user = new User(1L, "Mihai", "Pop", "mihai.pop@gmail.com", "asdfg", Role.CLIENT, false);
+			User user2 = new User(2L, "Ion", "Marin", "ion.marin@bookshop.com", "admin", Role.ADMIN, false);
 			userService.register(user);
 			userService.register(user2); //admin
 //			//userService.logIn(user.getEmail(), user.getPassword());

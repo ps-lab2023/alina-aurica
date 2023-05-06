@@ -36,6 +36,10 @@ export class BookService {
     return this.httpClient.get<Book[]>(this.baseURL + "/findAllByType" + type);
   }
 
+  sortedBook(){
+    return this.httpClient.post<Book[]>(this.baseURL + "/sortedBooks", null);
+  }
+
 
   // deleteBook():any{ //nu stiu daca merge
   //   return this.httpClient.delete(this.baseURL + "/delete",

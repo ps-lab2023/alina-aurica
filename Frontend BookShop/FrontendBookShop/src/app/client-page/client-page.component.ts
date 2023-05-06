@@ -16,7 +16,6 @@ export class ClientPageComponent implements OnInit{
   bookList: Book[] = []
   book: Book = new Book()
   cartList: Book[] = []
-
   bill: Bill = new Bill()
 
   constructor(private bookService:BookService,
@@ -79,6 +78,18 @@ export class ClientPageComponent implements OnInit{
         console.log("error");
       }
     )
+  }
+
+  sortedBooks(): void{
+    this.bookService.sortedBook().subscribe(
+      (result: Book[]) => {
+        console.log(result);
+        this.bookList = result;
+      },
+      (_error: Error) => {
+        alert("Sorted failed");
+      }
+    );
   }
 
   addInCart(){

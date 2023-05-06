@@ -4,6 +4,7 @@ import {BehaviorSubject, map, Observable} from "rxjs";
 import {Client} from "../model/Client";
 import {Book} from "../model/Book";
 import {Bill} from "../model/Bill";
+import {GiftCard} from "../model/GiftCard";
 
 @Injectable({
   providedIn: 'root'
@@ -48,4 +49,16 @@ export class ClientService{
         })
       );
   }
+
+  public generateGiftCard(email:any, personName:any, money: any): Observable<GiftCard>{
+    let credentials = {email: email};
+    return this.httpClient.post('http://localhost:8082/client/generateGiftCard' + '/' + personName + '/' + money,
+      JSON.stringify(credentials), {headers: {'Content-Type': 'application/json'}, observe: 'response'})
+      .pipe(
+        map((response: HttpResponse<any>) => {
+          return response.body as GiftCard;
+        })
+      );
+  }
+
 }

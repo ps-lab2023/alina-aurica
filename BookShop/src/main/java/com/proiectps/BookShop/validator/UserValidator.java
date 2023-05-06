@@ -21,7 +21,7 @@ public class UserValidator {
     }
 
 
-    private void validatePassword(String password) throws WrongAndNullException {
+    public void validatePassword(String password) throws WrongAndNullException {
         if(password == null || password.isBlank() || password.isEmpty()){
             throw new WrongAndNullException("Null password");
         }

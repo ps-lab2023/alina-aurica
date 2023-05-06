@@ -2,9 +2,11 @@ package com.proiectps.BookShop.controller;
 
 
 import com.proiectps.BookShop.DTO.AdminDTO;
+import com.proiectps.BookShop.DTO.BookDTO;
 import com.proiectps.BookShop.DTO.ClientDTO;
 import com.proiectps.BookShop.DTO.UserDTO;
 import com.proiectps.BookShop.model.Admin;
+import com.proiectps.BookShop.model.Book;
 import com.proiectps.BookShop.model.Client;
 import com.proiectps.BookShop.model.User;
 import com.proiectps.BookShop.service.ClientService;
@@ -17,6 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -50,6 +55,14 @@ public class UserController { //sa fac o metoda in Client si Admin ca atunci can
         return ResponseEntity.status(HttpStatus.OK).body(userDTO);
     }
 
+    @GetMapping("/findAll")
+    public List<UserDTO> getAllUser(){
+        List<User> users = userService.findAll();
+        //System.out.println("Suntem aici");
+        List<UserDTO> userDTO = users.stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
+        return userDTO;
+    }
+
     @DeleteMapping("/delete")
     public UserDTO deleteUser(@RequestBody User user){
         User user1 = userService.deleteUser(user);
@@ -62,6 +75,14 @@ public class UserController { //sa fac o metoda in Client si Admin ca atunci can
     public UserDTO updateUserByEmail(@RequestBody User user, @RequestParam String email){
 
         User user1 = userService.changeEmail(user, email);
+        UserDTO userDTO = modelMapper.map(user1, UserDTO.class);
+        return userDTO;
+    }
+
+    @PutMapping("/updatePassword/{password}")
+    public UserDTO updateUserByPassword(@RequestBody User user, @PathVariable String password){
+
+        User user1 = userService.changePassword(user, password);
         UserDTO userDTO = modelMapper.map(user1, UserDTO.class);
         return userDTO;
     }
@@ -84,6 +105,14 @@ public class UserController { //sa fac o metoda in Client si Admin ca atunci can
     public ResponseEntity logIn(@RequestBody UserDTO userDTO){
 
         User user1 = userService.logIn(userDTO.getEmail(), userDTO.getPassword());
+        UserDTO userDTO1 = modelMapper.map(user1, UserDTO.class);
+        return ResponseEntity.status(HttpStatus.OK).body(userDTO1);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity logOut(@RequestBody UserDTO userDTO){
+
+        User user1 = userService.logOut(userDTO.getEmail());
         UserDTO userDTO1 = modelMapper.map(user1, UserDTO.class);
         return ResponseEntity.status(HttpStatus.OK).body(userDTO1);
     }

@@ -1,16 +1,15 @@
 package com.proiectps.BookShop.controller;
 
 
-import com.proiectps.BookShop.DTO.BillDTO;
-import com.proiectps.BookShop.DTO.BookDTO;
-import com.proiectps.BookShop.DTO.ClientDTO;
-import com.proiectps.BookShop.DTO.UserDTO;
+import com.proiectps.BookShop.DTO.*;
 import com.proiectps.BookShop.model.Bill;
 import com.proiectps.BookShop.model.Book;
 import com.proiectps.BookShop.model.Client;
+import com.proiectps.BookShop.model.GiftCard;
 import com.proiectps.BookShop.service.BillService;
 import com.proiectps.BookShop.service.BookService;
 import com.proiectps.BookShop.service.ClientService;
+import com.proiectps.BookShop.service.GiftCardService;
 import com.proiectps.BookShop.service.impl.EmailServiceImpl;
 import com.proiectps.BookShop.validator.ClientValidator;
 import com.proiectps.BookShop.validator.exception.WrongAndNullException;
@@ -36,13 +35,12 @@ public class ClientController {
 
     @Autowired
     private EmailServiceImpl emailSenderService;
-
     @Autowired
     private ClientService clientService;
-
     @Autowired
     private BillService billService;
-
+    @Autowired
+    private GiftCardService giftCardService;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -93,9 +91,10 @@ public class ClientController {
     }
 
     @PutMapping("/addInCart{name}")
-    public ResponseEntity addInCart(@RequestBody UserDTO userDTO, @PathVariable String name){
+    public ResponseEntity addInCart(@RequestBody UserDTO userDTO, @PathVariable String name){ //asta ar trebui sa fie okay
         Client client = clientService.findByEmail(userDTO.getEmail());
         List<Book> books = clientService.addInCart(name, client);
+        System.out.println(books);
         List<BookDTO> booksDTO =  books.stream().map(book -> modelMapper.map(book, BookDTO.class)).collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.OK).body(booksDTO);
     }
@@ -127,6 +126,27 @@ public class ClientController {
                         "C:\\Users\\acasa\\Downloads\\BookShop\\BookShop\\Bill");
 
         return ResponseEntity.status(HttpStatus.OK).body(billDTO);
+    }
+
+    @PostMapping("/generateGiftCard/{personName}/{money}")
+    public ResponseEntity generateGiftCard(@RequestBody UserDTO userDTO, @PathVariable String personName, @PathVariable Float money) throws MessagingException {
+        Client client = clientService.findByEmail(userDTO.getEmail());
+        GiftCard giftCard = new GiftCard();
+        try {
+            giftCard = giftCardService.generateGiftCard(client, personName, money);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        GiftCardDTO giftCardDTO = modelMapper.map(giftCard, GiftCardDTO.class);
+        //EmailServiceImpl.run(userDTO.getEmail());
+
+
+        emailSenderService.sendMailWithAttachment(userDTO.getEmail(),
+                "This is email body.",
+                "This email subject", "" +
+                        "C:\\Users\\acasa\\Downloads\\BookShop\\BookShop\\GiftCard.pdf");
+
+        return ResponseEntity.status(HttpStatus.OK).body(giftCardDTO);
     }
 
 

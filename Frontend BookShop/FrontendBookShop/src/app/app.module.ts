@@ -11,6 +11,9 @@ import { RegisterComponent } from './register/register.component';
 import { ClientPageComponent } from './client-page/client-page.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { ViewPageComponent } from './view-page/view-page.component';
+import { GiftCardPageComponent } from './gift-card-page/gift-card-page.component';
+import { ViewUsersPageComponent } from './view-users-page/view-users-page.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { ViewPageComponent } from './view-page/view-page.component';
     RegisterComponent,
     ClientPageComponent,
     AdminPageComponent,
-    ViewPageComponent
+    ViewPageComponent,
+    GiftCardPageComponent,
+    ViewUsersPageComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

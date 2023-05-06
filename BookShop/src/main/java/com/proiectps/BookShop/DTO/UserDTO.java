@@ -20,4 +20,5 @@ public class UserDTO {
     private String password;
     //@NotBlank
     private Role role;
+    private boolean userLogged;
 }

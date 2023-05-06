@@ -37,7 +37,33 @@ export class ViewPageComponent implements OnInit{
   }
 
   logOut(){
-    localStorage.clear()
-    this.router.navigateByUrl("/firstPage");
+    const user: any = localStorage.getItem("user")
+    this.userService.logout(user).subscribe(
+      (userAux: User) => {
+        console.log(userAux)
+        this.user = userAux
+        localStorage.clear()
+        alert("LogOut successfull")
+        this.router.navigateByUrl("/firstPage");
+      },
+      (_error: Error) => {
+        alert("LogOut failed")
+      }
+    )
+  }
+
+  changePassword(){
+    console.log(this.user)
+    const user1: any = localStorage.getItem("user")
+    this.userService.changePassword(user1, this.user.password).subscribe(
+      (userAux: User) => {
+        console.log(userAux)
+        this.user = userAux
+        alert("Change password successfully")
+      },
+      (_error: Error) => {
+        alert("Change password failed")
+      }
+    )
   }
 }

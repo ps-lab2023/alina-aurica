@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -40,7 +41,10 @@ public class BillServiceImpl implements BillService {
         Bill bill = new Bill();
         bill.setClient(client);
         Bill bill1 = billRepository.save(bill);
-        client.setBill(bill);
+        List<Bill> bills = client.getBills();
+        bills.add(bill);
+        client.setBills(bills);
+        clientRepository.save(client);
         BillUtils.generateBillIntoFile(client, bookService);
         return bill1;
     }

@@ -28,5 +28,5 @@ public interface BookRepository extends CrudRepository<Book, Long> {
     List<Book> findAllByAuthor(String author);
     List<Book> findAllByType(Type type);
 
-
+    List<Book> findAllByClientsContains(Client client);
 }

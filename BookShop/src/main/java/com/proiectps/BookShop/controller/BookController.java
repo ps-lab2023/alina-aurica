@@ -121,6 +121,12 @@ public class BookController {
         } catch (WrongAndNullException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    @PostMapping("/sortedBooks")
+    public List<BookDTO> sortedBooks(){
+        List<Book> sortedBooks = bookService.sortBooks();
+        List<BookDTO> booksDTO = sortedBooks.stream().map(book -> modelMapper.map(book, BookDTO.class)).collect(Collectors.toList());
+        return booksDTO;
     }
 }

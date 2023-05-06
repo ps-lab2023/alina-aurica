@@ -6,6 +6,7 @@ export class User{
   lastName: string | undefined;
   email: string | undefined;
   password: string | undefined;
-  role: Role | undefined; //aici era un enum
+  role: Role | undefined;
+  userLogged: boolean | undefined;
 
 }

@@ -13,7 +13,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
@@ -31,6 +30,11 @@ public class User { //am nevoie de o metoda care sa-mi salveze in DB si la clien
     private String password;
     //@NotBlank
     private Role role;
+    private boolean userLogged;
+
+    public User(){
+        this.userLogged = false;
+    }
 
     public void saveUser(AdminRepository adminRepository, ClientRepository clientRepository){
         if(this.role == Role.ADMIN){

@@ -96,30 +96,23 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Book> addInCart(String name, Client client) { //imi baga o carte in plus, si nu inteleg de ce
+    public List<Book> addInCart(String name, Client client) { //trebuie sa lucram pe asta
         Book book = bookRepository.findByName(name);
-        List<Book> books;
-        List<Book> books1 = new ArrayList<>();
         Client foundClient = clientRepository.findClientByEmail(client.getEmail());
         if (book != null && book.getStock() != 0) {
             book.setStock(book.getStock() - 1);
-            book.setClient(foundClient);
+            List<Client> clients = book.getClients();
+            clients.add(client);
+            book.setClients(clients);
             bookRepository.save(book);
-            //books = foundClient.g(book);
-//            for(Book b: books){
-//                if(b.getClient() != null && b.getClient().getIdClient() == foundClient.getIdClient()){
-//                    books1.add(b);
-//                }
-//            }
-            //System.out.println(foundClient.getBooks());
-//            Client client1 = clientRepository.save(foundClient);
-//            clientRepository.delete(fou);
-            //System.out.println(client1.getBooks1());
-//            book.setStock(book.getStock() - 1);
-//            book.setClient(client1);
-//            bookRepository.save(book);
+
+            List<Book> books = foundClient.getBooks1();
+            books.add(book);
+            foundClient.setBooks1(books);
+            clientRepository.save(foundClient);
+
         }
-        return bookService.findByClient(foundClient);
+        return bookService.findByClient(client);
     }
 
     public List<Book> deleteFromCart(String name, Client client) {
@@ -131,9 +124,19 @@ public class ClientServiceImpl implements ClientService {
             if (b.getName().equals(name)) {
                 //client.deleteFromCart(b);
                 Book book = bookRepository.findByName(name);
+                Client foundClient = clientRepository.findClientByEmail(client.getEmail());
                 book.setStock(book.getStock() + 1);
-                book.setClient(null);
+                List<Client> clients = book.getClients();
+                clients.remove(foundClient);
+                book.setClients(clients);
                 bookRepository.save(book);
+
+
+                List<Book> books1 = foundClient.getBooks1();
+                books1.remove(book);
+                foundClient.setBooks1(books1);
+                clientRepository.save(foundClient);
+
             }
         }
         return bookService.findByClient(client);

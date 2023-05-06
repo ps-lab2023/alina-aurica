@@ -6,12 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
-public class Book { //cred ca pot sa scap de client de aici
+public class Book implements Comparable<Book> { //cred ca pot sa scap de client de aici
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
     private Long id;
@@ -23,37 +25,27 @@ public class Book { //cred ca pot sa scap de client de aici
     private Type type;
 
 
-    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-    private Client client;
+    @ManyToMany(mappedBy = "books1")
+    private List<Client> clients;
 
     /*
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Cart cart;
     */
 
-    public void deleteClient(){
-        client = null;
-    }
-
     @Override
     public String toString() {
-        if(client == null){
-            return "Book{" +
+        return "Book{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", author='" + author + '\'' +
                 ", stock=" + stock +
                 ", price=" + price +
                 ", type=" + type ;}
-        else
-            return "Book{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", author='" + author + '\'' +
-                ", stock=" + stock +
-                ", price=" + price +
-                ", type=" + type +
-                ", client=" + client +
-                '}';
+
+
+    @Override
+    public int compareTo(Book o) {
+        return this.name.compareTo(o.getName());
     }
 }

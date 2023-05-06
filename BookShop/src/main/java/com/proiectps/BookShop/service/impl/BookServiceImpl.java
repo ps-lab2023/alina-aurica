@@ -11,11 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 //@Transactional
 @Service
@@ -170,12 +169,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findByClient(Client client) {
-        List<Book> books = new ArrayList<>();
-        bookRepository.findAll().forEach(books::add);
-        return books.stream()
-                .filter(book -> Objects.nonNull(book.getClient()))
-                .filter(book -> book.getClient().equals(client))
-                .collect(Collectors.toList());
+        return bookRepository.findAllByClientsContains(client);
+    }
+
+    @Override
+    public List<Book> sortBooks(){
+        List<Book> sortedList = findAll();
+        Collections.sort(sortedList);
+        return sortedList;
     }
 
 

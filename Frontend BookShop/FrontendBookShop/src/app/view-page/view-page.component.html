@@ -15,7 +15,7 @@
 <div>
   <div style="margin-top:10%; margin-left: 30%; margin-right: 30%" class="card-header">
     <h1 style="color: deeppink">Profile</h1>
-    <form>
+    <form (ngSubmit)="changePassword()">
       <div class="mb-sm-3">
         <label for="firstName" class="form-label">First Name</label>
         <input type="firstName" value="{{user.firstName}}" class="form-control" id="firstName" name="firstName">
@@ -32,7 +32,7 @@
         <label for="text" class="form-label">Password</label>
         <input type="text" value="{{user.password}}" [(ngModel)]="user.password" class="form-control" id="text" name="text">
       </div>
-      <!-- <button type="button" class="btn btn-primary" (click)="searchByName()">Search by name</button>-->
+      <button type="button" class="btn btn-primary" (click)="changePassword()">Change Password</button>
     </form>
     <button type="button" class="btn btn-primary" (click)="logOut()">LogOut</button>
   </div>

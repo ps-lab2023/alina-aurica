@@ -2,21 +2,30 @@ package com.proiectps.BookShop.model;
 
 import com.proiectps.BookShop.repository.AdminRepository;
 import com.proiectps.BookShop.repository.ClientRepository;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlTransient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @Builder
 @Data
-public class User { //am nevoie de o metoda care sa-mi salveze in DB si la client si la admin
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
     private Long id;
@@ -28,7 +37,8 @@ public class User { //am nevoie de o metoda care sa-mi salveze in DB si la clien
     private String email;
     //@NotBlank
     private String password;
-    //@NotBlank
+
+    @Enumerated(EnumType.STRING)
     private Role role;
     private boolean userLogged;
 
@@ -76,4 +86,41 @@ public class User { //am nevoie de o metoda care sa-mi salveze in DB si la clien
     public String toString(){
         return "Userul " + id + " cu numele " + firstName + " " + lastName + ", cu email-ul " + email + " si parola " + password;
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+
 }

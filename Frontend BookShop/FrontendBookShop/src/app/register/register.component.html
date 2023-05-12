@@ -16,19 +16,24 @@
   <form (ngSubmit)="register()">
     <div class="mb-3">
       <label for="firstName" class="form-label">First Name</label>
-      <input type="firstName" [(ngModel)]="user.firstName" class="form-control" id="firstName" name="firstName">
+      <input type="firstName" [(ngModel)]="user.firstName" required #nullFirstName="ngModel" class="form-control" id="firstName" name="firstName">
+      <div *ngIf="nullFirstName.errors?.['required']">Null First Name.</div>
     </div>
     <div class="mb-3">
       <label for="lastName" class="form-label">Last Name</label>
-      <input type="lastName" [(ngModel)]="user.lastName" class="form-control" id="lastName" name="lastName">
+      <input type="lastName" [(ngModel)]="user.lastName" required #nullLastName="ngModel" class="form-control" id="lastName" name="lastName">
+      <div *ngIf="nullLastName.errors?.['required']">Null Last Name.</div>
     </div>
     <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
-      <input type="email" [(ngModel)]="user.email" class="form-control" id="email" name="email">
+      <label for="primaryEmail" class="form-label">Email</label>
+      <input type="primaryEmail" [(ngModel)]="user.email" required [email]="true" #prmEmail="ngModel" class="form-control" id="primaryEmail" name="primaryEmail">
+      <div *ngIf="prmEmail.errors?.['email']"> Email address is not valid.</div>
+      <div *ngIf="prmEmail.errors?.['required']">Null password.</div>
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
-      <input type="password" [(ngModel)]="user.password" class="form-control" id="password" name="password">
+      <input type="password" [(ngModel)]="user.password" required #nullPassword="ngModel" class="form-control"  id="password" name="password">
+      <div *ngIf="nullPassword.errors?.['required']">Null password.</div>
     </div>
     <button type="submit" class="btn btn-primary">Register</button>
   </form>

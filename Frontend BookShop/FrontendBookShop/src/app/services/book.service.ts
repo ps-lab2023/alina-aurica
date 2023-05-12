@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Book} from "../model/Book";
 import {Type} from "../model/Type";
+import {Observable} from "rxjs";
+import {Review} from "../model/Review";
 
 
 @Injectable({
@@ -14,8 +16,12 @@ export class BookService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getAllBook() {
-    return this.httpClient.get<Book[]>(this.baseURL + "/findAll");
+  getAllBook(): Observable<Book[]> {
+    let token = localStorage.getItem("token")
+    let header = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+    return this.httpClient.get<Book[]>(this.baseURL + "/findAll", {headers: header});
 
   }
 
@@ -25,19 +31,35 @@ export class BookService {
   }
 
   getAllBooksByName(name: any) {
-    return this.httpClient.get<Book[]>(this.baseURL + "/findAllByName" + name);
+    let token = localStorage.getItem("token")
+    let header = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+    return this.httpClient.get<Book[]>(this.baseURL + "/findAllByName" + name, {headers: header});
   }
 
   getAllBookByAuthor(author: any){
-    return this.httpClient.get<Book[]>(this.baseURL + "/findAllByAuthor" + author);
+    let token = localStorage.getItem("token")
+    let header = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+    return this.httpClient.get<Book[]>(this.baseURL + "/findAllByAuthor" + author, {headers: header});
   }
 
   getAllBookByType(type: any){
-    return this.httpClient.get<Book[]>(this.baseURL + "/findAllByType" + type);
+    let token = localStorage.getItem("token")
+    let header = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+    return this.httpClient.get<Book[]>(this.baseURL + "/findAllByType" + type, {headers: header});
   }
 
   sortedBook(){
-    return this.httpClient.post<Book[]>(this.baseURL + "/sortedBooks", null);
+    let token = localStorage.getItem("token")
+    let header = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+    return this.httpClient.post<Book[]>(this.baseURL + "/sortedBooks", null, {headers: header});
   }
 
 
@@ -51,26 +73,51 @@ export class BookService {
   //     {headers:{'Content-Type':'application/json'},observe:'response'});
   // }
 
-  deleteBookById(id: any):any{ //nu merge
+  deleteBookById(id: any): any {
+    let token = localStorage.getItem("token")
+    let header = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
     return this.httpClient.delete(this.baseURL + "/deleteById" + id,
-      {headers:{'Content-Type':'application/json'},observe:'response'});
+      {headers: header});
   }
 
   insertBook(name: any, author: any, stock: any, price: any, type: any): any{
+    let token = localStorage.getItem("token")
+    let header = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
     let credentials = {name: name, author: author, stock:stock, price: price, type: type};
     return this.httpClient.put(this.baseURL + "/insert",
-      JSON.stringify(credentials) ,{headers:{'Content-Type':'application/json'},observe:'response'});
+      JSON.stringify(credentials) ,{headers: header});
   }
 
   updateBookByPrice(name: any, price: any): any{
+    let token = localStorage.getItem("token")
+    let header = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
     let credentials = {name: name};
     return this.httpClient.put(this.baseURL + "/updatePrice" + price,
-      JSON.stringify(credentials) ,{headers:{'Content-Type':'application/json'},observe:'response'});
+      JSON.stringify(credentials) ,{headers: header});
   }
 
   updateBookByStock(name: any, stock: any): any{
+    let token = localStorage.getItem("token")
+    let header = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
     let credentials = {name: name};
     return this.httpClient.put(this.baseURL + "/updateStock" + stock,
-      JSON.stringify(credentials) ,{headers:{'Content-Type':'application/json'},observe:'response'});
+      JSON.stringify(credentials) ,{headers: header});
+  }
+
+  seeReviews(nameBook: any): any{
+    return this.httpClient.get<Review[]>(this.baseURL + "/seeReview" + "/" + nameBook);
+  }
+
+  writeReview(nameBook: any, nameReview: any): any {
+    console.log(nameBook,nameReview);
+    return this.httpClient.put<Review>(this.baseURL + "/writeReview" + "/" + nameBook + "/" + nameReview, null);
   }
 }

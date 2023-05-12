@@ -1,19 +1,14 @@
 package com.proiectps.BookShop.controller;
 
 
-import com.proiectps.BookShop.DTO.AdminDTO;
-import com.proiectps.BookShop.DTO.BookDTO;
-import com.proiectps.BookShop.DTO.ClientDTO;
 import com.proiectps.BookShop.DTO.UserDTO;
-import com.proiectps.BookShop.model.Admin;
-import com.proiectps.BookShop.model.Book;
-import com.proiectps.BookShop.model.Client;
+import com.proiectps.BookShop.controller.auth.AuthenticationResponse;
 import com.proiectps.BookShop.model.User;
-import com.proiectps.BookShop.service.ClientService;
 import com.proiectps.BookShop.service.UserService;
-import com.proiectps.BookShop.validator.ClientValidator;
 import com.proiectps.BookShop.validator.UserValidator;
 import com.proiectps.BookShop.validator.exception.WrongAndNullException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +21,8 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
+@Slf4j
 public class UserController { //sa fac o metoda in Client si Admin ca atunci cand modific ceva sa se modifice si la user
     @Autowired
     private UserService userService;
@@ -63,6 +60,12 @@ public class UserController { //sa fac o metoda in Client si Admin ca atunci can
         return userDTO;
     }
 
+    @GetMapping("/xml/{id}")
+    public void saveUsersToXML(@PathVariable Long id){
+        System.out.println("suntem aici");
+        userService.saveUserToXML(id);
+    }
+
     @DeleteMapping("/delete")
     public UserDTO deleteUser(@RequestBody User user){
         User user1 = userService.deleteUser(user);
@@ -80,33 +83,24 @@ public class UserController { //sa fac o metoda in Client si Admin ca atunci can
     }
 
     @PutMapping("/updatePassword/{password}")
-    public UserDTO updateUserByPassword(@RequestBody User user, @PathVariable String password){
-
-        User user1 = userService.changePassword(user, password);
-        UserDTO userDTO = modelMapper.map(user1, UserDTO.class);
-        return userDTO;
+    public ResponseEntity<AuthenticationResponse> updateUserByPassword(@RequestBody User user, @PathVariable String password){
+        return ResponseEntity.ok(userService.changePassword(user, password));
+//        User user1 = userService.changePassword(user, password);
+//        UserDTO userDTO = modelMapper.map(user1, UserDTO.class);
+//        return userDTO;
     }
 
 
-    @PutMapping("/register")
-    public UserDTO register(@RequestBody User user){ //sa ma mai uit aici
-        try {
-            User user1 = userService.register(user);
-            userValidator.validateUser(user1);
-            UserDTO userDTO = modelMapper.map(user1, UserDTO.class);
-            return userDTO;
-        } catch (WrongAndNullException e) {
-            throw new RuntimeException(e);
-        }
+    @PostMapping("/register")
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody User user){
+       return ResponseEntity.ok(userService.register(user));
 
     }
 
     @PostMapping("/login")
-    public ResponseEntity logIn(@RequestBody UserDTO userDTO){
-
-        User user1 = userService.logIn(userDTO.getEmail(), userDTO.getPassword());
-        UserDTO userDTO1 = modelMapper.map(user1, UserDTO.class);
-        return ResponseEntity.status(HttpStatus.OK).body(userDTO1);
+    public ResponseEntity<AuthenticationResponse> logIn(@RequestBody UserDTO userDTO){
+        log.info("inside postmapp");
+        return ResponseEntity.ok(userService.logIn(userDTO.getEmail(), userDTO.getPassword()));
     }
 
     @PostMapping("/logout")

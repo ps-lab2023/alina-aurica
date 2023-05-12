@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<user>
+    <id>1</id>
+    <firstName>Mihai</firstName>
+    <lastName>Pop</lastName>
+    <email>mihai.pop@gmail.com</email>
+    <password>$2a$10$NLmUDSbfesYjnpx3EEFGVeYqGEjZ8vg5.p01ion1YABS4rYJmuLpm</password>
+    <role>CLIENT</role>
+    <userLogged>false</userLogged>
+</user>

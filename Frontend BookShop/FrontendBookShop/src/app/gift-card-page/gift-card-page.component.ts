@@ -4,6 +4,7 @@ import {BookService} from "../services/book.service";
 import {ClientService} from "../services/client.service";
 import {FormBuilder} from "@angular/forms";
 import {Bill} from "../model/Bill";
+import jwt_decode from "jwt-decode";
 
 @Component({
   selector: 'app-gift-card-page',
@@ -23,8 +24,10 @@ export class GiftCardPageComponent implements OnInit{
 
   generateGiftCard(){
     console.log(this.giftCard)
-    const user: any = localStorage.getItem("user")
-    this.clientService.generateGiftCard(user, this.giftCard.personName, this.giftCard.money).subscribe(
+    const user: any = localStorage.getItem("token")
+    var tokenPayload: any;
+    tokenPayload = jwt_decode(user)
+    this.clientService.generateGiftCard(tokenPayload.sub, this.giftCard.personName, this.giftCard.money).subscribe(
       (giftCardAux : GiftCard) =>{
         console.log(giftCardAux)
         this.giftCard = giftCardAux

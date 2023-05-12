@@ -1,10 +1,7 @@
 package com.proiectps.BookShop;
 
 import com.proiectps.BookShop.model.*;
-import com.proiectps.BookShop.repository.AdminRepository;
-import com.proiectps.BookShop.repository.BillRepository;
-import com.proiectps.BookShop.repository.BookRepository;
-import com.proiectps.BookShop.repository.ClientRepository;
+import com.proiectps.BookShop.repository.*;
 import com.proiectps.BookShop.service.AdminService;
 import com.proiectps.BookShop.service.ClientService;
 import com.proiectps.BookShop.service.UserService;
@@ -27,7 +24,7 @@ public class BookShopApplication {
 
 
 	@Bean
-	CommandLineRunner init(BookRepository bookRepo, ClientRepository clientRepo, AdminRepository adminRepo, BillRepository billRepo, UserServiceImpl userService, BookServiceImpl bookService, ClientService clientService, AdminService adminService){
+	CommandLineRunner init(UserRepository userRepo, BookRepository bookRepo, ClientRepository clientRepo, AdminRepository adminRepo, BillRepository billRepo, UserServiceImpl userService, BookServiceImpl bookService, ClientService clientService, AdminService adminService){
 		return args -> {
 //			Client client = new Client();
 //			Bill bill = new Bill();
@@ -37,7 +34,8 @@ public class BookShopApplication {
 			User user = new User(1L, "Mihai", "Pop", "mihai.pop@gmail.com", "asdfg", Role.CLIENT, false);
 			User user2 = new User(2L, "Ion", "Marin", "ion.marin@bookshop.com", "admin", Role.ADMIN, false);
 			userService.register(user);
-			userService.register(user2); //admin
+			userService.registerAdmin(user2);
+			//userService.register(user2); //admin
 //			//userService.logIn(user.getEmail(), user.getPassword());
 //			System.out.println(userService.findByEmail(user.getEmail()));
 //			if(userService.logIn(user.getEmail(), user.getPassword()).getRole() == Role.CLIENT) {

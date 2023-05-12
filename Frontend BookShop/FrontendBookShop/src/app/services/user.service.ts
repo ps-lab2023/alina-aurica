@@ -16,16 +16,10 @@ export class UserService {
     this.ownerDataStream=new BehaviorSubject<any>(null);
   }
 
-
-  public login(email: any, password: any): Observable<User> {
+  public login(email: any, password: any): any {
     let credentials = { email: email, password: password };
     return this.httpClient.post('http://localhost:8082/user/login',
-      JSON.stringify(credentials), { headers: { 'Content-Type': 'application/json' }, observe: 'response' })
-      .pipe(
-        map((response: HttpResponse<any>) => {
-          return response.body as User;
-        })
-      );
+      JSON.stringify(credentials), { headers: { 'Content-Type': 'application/json' }});
   }
 
   public logout(email: any): Observable<User> {
@@ -42,7 +36,7 @@ export class UserService {
   public register(firstName: any, lastName: any, email: any, password: any, role: any): any
   {
     let credentials = {firstName: firstName, lastName: lastName, email: email, password: password, role:role}
-    return this.httpClient.put('http://localhost:8082/user/register',
+    return this.httpClient.post('http://localhost:8082/user/register',
       JSON.stringify(credentials), {headers:{'Content-Type':'application/json'}, observe:'response'});
   }
 
@@ -55,10 +49,16 @@ export class UserService {
   {
     let credentials = {email: email}
     return this.httpClient.put('http://localhost:8082/user/updatePassword' + '/' + password,
-      JSON.stringify(credentials), {headers:{'Content-Type':'application/json'}, observe:'response'})
+      JSON.stringify(credentials), {headers:{'Content-Type':'application/json'}})
   }
 
   getAllUsers() {
     return this.httpClient.get<User[]>(this.baseURL + "/findAll");
   }
+
+  saveUsersToXML(id: any){
+    console.log(id)
+    return this.httpClient.get(this.baseURL + '/xml' + '/' + id);
+  }
+
 }

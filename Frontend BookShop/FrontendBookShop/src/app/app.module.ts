@@ -14,6 +14,7 @@ import { ViewPageComponent } from './view-page/view-page.component';
 import { GiftCardPageComponent } from './gift-card-page/gift-card-page.component';
 import { ViewUsersPageComponent } from './view-users-page/view-users-page.component';
 import { ChatComponent } from './chat/chat.component';
+import { ReviewPageComponent } from './review-page/review-page.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ChatComponent } from './chat/chat.component';
     ViewPageComponent,
     GiftCardPageComponent,
     ViewUsersPageComponent,
-    ChatComponent
+    ChatComponent,
+    ReviewPageComponent
   ],
   imports: [
     BrowserModule,

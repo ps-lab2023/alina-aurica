@@ -5,6 +5,7 @@ import {User} from "../model/user";
 import {UserService} from "../services/user.service";
 import {first} from "rxjs";
 import {Role} from "../model/Role";
+import jwt_decode from "jwt-decode";
 
 @Component({
   selector: 'app-login',
@@ -28,21 +29,23 @@ export class LoginComponent implements OnInit{
   login() {
     console.log(this.user);
     this.userService.login(this.user.email, this.user.password).subscribe(
-      (userAux: User) => {
-        console.log(userAux);
-        this.user = userAux;
-        console.log(this.user);
-        if (typeof userAux.email === "string") {
-          localStorage.setItem("user", userAux.email);
-        }
+      (userAux: any) => {
+        console.log(userAux.token);
+
+        // if (typeof userAux.email === "string") {
+        //   localStorage.setItem("user", userAux.email);
+        // }
+        localStorage.setItem("token", userAux.token);
+
         alert("Login successfully");
-        console.log(userAux.role);
-        // @ts-ignore
-        if (userAux.role === "ADMIN") {
+
+        var tokenPayload: any;
+        tokenPayload = jwt_decode(userAux.token)
+        if (tokenPayload.role === "ADMIN") {
           console.log("admin");
           this.router.navigateByUrl("/adminPage");
-        } else { // @ts-ignore
-          if (userAux.role === "CLIENT") {
+        } else {
+          if (tokenPayload.role === "CLIENT") {
             console.log("client");
             this.router.navigateByUrl("/clientPage");
           }

@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 public class Book implements Comparable<Book> { //cred ca pot sa scap de client de aici
     @Id
-    @GeneratedValue(strategy =  GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
 
@@ -27,6 +27,9 @@ public class Book implements Comparable<Book> { //cred ca pot sa scap de client 
 
     @ManyToMany(mappedBy = "books1")
     private List<Client> clients;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "id")
+    private List<Review> reviews;
 
     /*
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -41,7 +44,8 @@ public class Book implements Comparable<Book> { //cred ca pot sa scap de client 
                 ", author='" + author + '\'' +
                 ", stock=" + stock +
                 ", price=" + price +
-                ", type=" + type ;}
+                ", type=" + type;
+    }
 
 
     @Override

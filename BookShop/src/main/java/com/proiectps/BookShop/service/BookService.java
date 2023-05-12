@@ -18,6 +18,7 @@ public interface BookService { //nu e finalizata
     Optional<Book> deleteById(Long id);
     Book deleteBookByName(String name);
     Optional<Book> findById(Long id);
+    Book findByName(String name);
     List<Book> searchFromName(String name);
     List<Book> searchFromAuthor(String author);
     List<Book> searchFromType(Type type);

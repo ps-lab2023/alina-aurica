@@ -144,6 +144,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Book findByName(String name) {
+        return bookRepository.findByName(name);
+    }
+
+    @Override
     public List<Book> searchFromName(String name) {
         //System.out.println(name);
         //System.out.println(bookRepository.findAllByName(name).toString());

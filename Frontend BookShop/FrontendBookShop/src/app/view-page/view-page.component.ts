@@ -3,6 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {User} from "../model/User";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../services/user.service";
+import jwt_decode from "jwt-decode";
 
 @Component({
   selector: 'app-view-page',
@@ -24,8 +25,11 @@ export class ViewPageComponent implements OnInit{
   }
 
   viewProfile(){
-    const userAux: any = localStorage.getItem("user")
-    this.userService.viewProfile(userAux).subscribe(
+    const user: any = localStorage.getItem("token")
+    console.log(user)
+    var tokenPayload: any;
+    tokenPayload = jwt_decode(user)
+    this.userService.viewProfile(tokenPayload.sub).subscribe(
       (userProfile: User) => {
         console.log(userProfile)
         this.user = userProfile
@@ -37,8 +41,11 @@ export class ViewPageComponent implements OnInit{
   }
 
   logOut(){
-    const user: any = localStorage.getItem("user")
-    this.userService.logout(user).subscribe(
+    const user: any = localStorage.getItem("token")
+    console.log(user)
+    var tokenPayload: any;
+    tokenPayload = jwt_decode(user)
+    this.userService.logout(tokenPayload.sub).subscribe(
       (userAux: User) => {
         console.log(userAux)
         this.user = userAux
@@ -53,12 +60,16 @@ export class ViewPageComponent implements OnInit{
   }
 
   changePassword(){
-    console.log(this.user)
-    const user1: any = localStorage.getItem("user")
-    this.userService.changePassword(user1, this.user.password).subscribe(
-      (userAux: User) => {
-        console.log(userAux)
-        this.user = userAux
+    const user1: any = localStorage.getItem("token")
+    console.log(user1)
+    var tokenPayload: any;
+    tokenPayload = jwt_decode(user1)
+    this.userService.changePassword(tokenPayload.sub, this.user.password).subscribe(
+      (userAux: any) => {
+        console.log(userAux.token)
+        localStorage.setItem("token", userAux.token);
+
+        //this.user = userAux
         alert("Change password successfully")
       },
       (_error: Error) => {

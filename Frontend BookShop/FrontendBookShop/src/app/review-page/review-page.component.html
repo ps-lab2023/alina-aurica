@@ -11,37 +11,35 @@
   </div>
 </nav>
 
+<div>
+  <div style="margin-left: 30%; margin-right: 30%; margin-top: 10%" class="card-header">
+    <form (ngSubmit)="seeReviews(); writeReview()">
+      <div class="mb-sm-3">
+        <label for="nameBook" class="form-label">Name Book</label>
+        <input type="nameBook" [(ngModel)]="nameBook" class="form-control" id="nameBook" name="nameBook">
+      </div>
+      <div class="mb-sm-3">
+        <label for="nameReview" class="form-label">Review</label>
+        <input type="nameReview" [(ngModel)]="nameReview" class="form-control" id="nameReview" name="nameReview">
+      </div>
+      <button type="button" class="btn btn-primary" (click)="seeReviews()">See Reviews</button>
+      <button type="button" class="btn btn-primary" (click)="writeReview()">Write Review</button>
+    </form>
+  </div>
+</div>
+
 <div style="margin-top: 10%; color: deeppink; background-color: lightcoral" class="container">
   <table class="table table-bordered table-striped">
     <thead>
     <tr>
-      <th>Id</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Email</th>
-      <th>Role</th>
-      <th>Logged</th>
+      <th>Review</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let user of users">
-      <td><span>{{user.id}}</span></td>
-      <td><span>{{user.firstName}}</span></td>
-      <td><span>{{user.lastName}}</span></td>
-      <td><span>{{user.email}}</span></td>
-      <td><span>{{user.role}}</span></td>
-      <td>{{user.userLogged ? 'Yes' : 'No'}}</td>
+    <tr *ngFor="let rev of reviewList">
+      <td><span>{{rev.review}}</span></td>
     </tr>
     </tbody>
   </table>
 </div>
 
-<div style="margin-left: 30%; margin-right: 30%" class="card-header">
-  <form (ngSubmit)="saveUserToXML()">
-    <div class="mb-sm-3">
-      <label for="name" class="form-label">Id</label>
-      <input type="name" [(ngModel)]="id" class="form-control" id="name" name="name">
-    </div>
-    <button style="margin-left: 45%" type="button" class="btn btn-primary" (click)="saveUserToXML()">Save User</button>
-  </form>
-</div>

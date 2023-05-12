@@ -12,6 +12,7 @@ import {User} from "../model/User";
 export class ViewUsersPageComponent implements OnInit{
 
   users: User[] = [];
+  id: any
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -29,6 +30,11 @@ export class ViewUsersPageComponent implements OnInit{
         console.log("error");
       }
     );
+  }
+
+  saveUserToXML(): void {
+    console.log(this.id)
+    this.userService.saveUsersToXML(this.id).subscribe(() => alert("Saved!"));
   }
 
 }

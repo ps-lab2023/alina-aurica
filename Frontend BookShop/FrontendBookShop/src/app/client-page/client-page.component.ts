@@ -4,6 +4,7 @@ import {BookService} from "../services/book.service";
 import {ClientService} from "../services/client.service";
 import {FormBuilder} from "@angular/forms";
 import {Bill} from "../model/Bill";
+import jwt_decode from "jwt-decode";
 
 
 @Component({
@@ -94,9 +95,11 @@ export class ClientPageComponent implements OnInit{
 
   addInCart(){
     console.log(this.book)
-    const user: any = localStorage.getItem("user")
+    const user: any = localStorage.getItem("token")
     console.log(user)
-    this.clientService.addInCart(this.book.name, user).subscribe(
+    var tokenPayload: any;
+    tokenPayload = jwt_decode(user)
+    this.clientService.addInCart(this.book.name, tokenPayload.sub).subscribe(
       (cart: Book[]) => {
         console.log(cart)
         this.cartList = cart
@@ -110,8 +113,10 @@ export class ClientPageComponent implements OnInit{
 
   deleteFromCart(){
     console.log(this.book)
-    const user: any = localStorage.getItem("user")
-    this.clientService.deleteFromCart(this.book.name, user).subscribe(
+    const user: any = localStorage.getItem("token")
+    var tokenPayload: any;
+    tokenPayload = jwt_decode(user)
+    this.clientService.deleteFromCart(this.book.name, tokenPayload.sub).subscribe(
       (cart: Book[]) => {
         console.log(cart)
         this.cartList = cart
@@ -125,8 +130,10 @@ export class ClientPageComponent implements OnInit{
 
   generateBill(){
     console.log(this.book)
-    const user: any = localStorage.getItem("user")
-    this.clientService.generateBill(user).subscribe(
+    const user: any = localStorage.getItem("token")
+    var tokenPayload: any;
+    tokenPayload = jwt_decode(user)
+    this.clientService.generateBill(tokenPayload.sub).subscribe(
       (billAux : Bill) =>{
         console.log(billAux)
         this.bill = billAux

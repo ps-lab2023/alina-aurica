@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Random;
 
 import static java.lang.Math.random;
 
@@ -29,9 +30,10 @@ public class GiftCard {
     private Client client;
 
     public GiftCard(){
+        Random rand = new Random();
         localDateTime = LocalDateTime.now();
         time = "Availability: 5 days";
-        numberCard = (long) random() * 1000000;
+        numberCard = rand.nextLong();
     }
 
 }

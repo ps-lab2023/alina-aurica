@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject} from "rxjs";
 import {Book} from "../model/Book";
 
@@ -15,6 +15,10 @@ export class GreetingService {
   }
 
   public getMessageInFrontend(){
-    return this.httpClient.get<string[]>(this.baseURL)
+    let token = localStorage.getItem("token")
+    let header = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+    return this.httpClient.get<string[]>(this.baseURL, {headers: header})
   }
 }
